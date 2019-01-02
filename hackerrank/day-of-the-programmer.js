@@ -1,6 +1,11 @@
-// the Julian calendar's leap years 는 (4로 나눠진다.) From 1700 ~ 1917
-// the Julian calendar를 사용하고 2월 14일이 32번째 날임. 고로 2월은 총 15일(14~28  1918년은 윤년이 아님) in 1918
-// the Gregorian calendar's leap years 는 (400으로 나눠진다 || (4로 나눠진다 && 100으로 나누어 떨어지지 않는다.)) Since 1919
+/**
+ * 해당 년도에서의 the day of the programmer를 구하라(256번쨰 날)
+ * the Julian calendar's leap years 는 (4로 나눠진다.) From 1700 ~ 1917
+ * the Julian calendar를 사용하고 2월 14일이 32번째 날임. 고로 2월은 총 15일(14~28  1918년은 윤년이 아님) in 1918
+ * the Gregorian calendar's leap years 는 (400으로 나눠진다 || (4로 나눠진다 && 100으로 나누어 떨어지지 않는다.)) Since 1919
+ * @param year
+ * @returns {string}
+ */
 function dayOfProgrammer(year) {
 
     let d = 13;
