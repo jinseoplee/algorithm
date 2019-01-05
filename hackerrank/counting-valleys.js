@@ -17,7 +17,7 @@ function countingValleys(n, s) {
         }
 
         return valleysCheck["valleys"];
-    }) ;
+    });
 
     return valleysCheck["valleys"];
 }
