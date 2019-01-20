@@ -9,5 +9,12 @@ function bonAppetit(bill, k, b) {
     console.log(fairlyCost < b ? b - fairlyCost : "Bon Appetit");
 }
 
+function bonAppetit2(bill, k, b) {
+    let total = parseInt(bill.reduce((sum, cost) => sum + cost, 0) - bill[k]) / 2;
+    let annaChange = bill[k] / 2;
+    console.log( (total === b) ? "Bon Appetit" : annaChange);
+}
+
 bonAppetit([3, 10, 2, 9], 1, 12);
 bonAppetit([3, 10, 2, 9], 1, 7);
+
