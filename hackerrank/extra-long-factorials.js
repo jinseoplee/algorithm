@@ -9,13 +9,13 @@
  */
 const factorials = (n) => {
 
-    let num = new Number(0);
+    let result = 0;
     if (n !== 1)
-        num = n * extraLongFactorials(n - 1);
+        result = n * extraLongFactorials(n - 1);
     else
         return 1;
 
-    return new Number(num);
+    return result;
 };
 
 /**
