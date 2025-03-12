@@ -1,0 +1,11 @@
+SELECT
+    ANIMAL_TYPE,
+    COUNT(*) AS count
+FROM
+    ANIMAL_INS
+WHERE
+    ANIMAL_TYPE IN ('Cat', 'Dog') -- 고양이와 개만 선택
+GROUP BY
+    ANIMAL_TYPE
+ORDER BY
+    ANIMAL_TYPE ASC;
