@@ -1,10 +1,7 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
 class Node {
@@ -17,9 +14,8 @@ class Node {
 }
 
 public class Main {
-	static int n, m;
-	static int answer = Integer.MIN_VALUE;
-	static int[][] map;
+	static int n, m, answer;
+	static int[][] map, copiedMap;
 
 	static List<Node> virus = new ArrayList<>();
 
@@ -32,6 +28,7 @@ public class Main {
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
 		map = new int[n][m];
+		copiedMap = new int[n][m];
 
 		for (int i = 0; i < n; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -43,49 +40,43 @@ public class Main {
 			}
 		}
 
-		buildWall(0);
+		buildWall(0, 0);
 
 		System.out.println(answer);
 	}
 
-	static void buildWall(int wallCount) {
+	static void buildWall(int start, int wallCount) {
 		if (wallCount == 3) {
-			int[][] copiedMap = new int[n][m];
 			for (int i = 0; i < n; i++) {
-				copiedMap[i] = Arrays.copyOf(map[i], m);
+				System.arraycopy(map[i], 0, copiedMap[i], 0, m);
 			}
-			bfs(copiedMap);
-			int safeArea = safeArea(copiedMap);
-			answer = Math.max(answer, safeArea);
+
+			for (Node v : virus) {
+				dfs(v.r, v.c);
+			}
+
+			answer = Math.max(answer, safeArea());
 			return;
 		}
 
-		for (int i = 0; i < n * m; i++) {
+		for (int i = start; i < n * m; i++) {
 			int r = i / m;
 			int c = i % m;
 			if (map[r][c] == 0) {
 				map[r][c] = 1;
-				buildWall(wallCount + 1);
+				buildWall(i + 1, wallCount + 1);
 				map[r][c] = 0;
 			}
 		}
 	}
 
-	static void bfs(int[][] copiedMap) {
-		Queue<Node> bfsQ = new ArrayDeque<>();
-		for (Node v : virus) {
-			bfsQ.offer(v);
-		}
-
-		while (!bfsQ.isEmpty()) {
-			Node curr = bfsQ.poll();
-			for (int dir = 0; dir < 4; dir++) {
-				int nr = curr.r + dr[dir];
-				int nc = curr.c + dc[dir];
-				if (inRange(nr, nc) && copiedMap[nr][nc] == 0) {
-					bfsQ.offer(new Node(nr, nc));
-					copiedMap[nr][nc] = 2;
-				}
+	static void dfs(int r, int c) {
+		for (int dir = 0; dir < 4; dir++) {
+			int nr = r + dr[dir];
+			int nc = c + dc[dir];
+			if (inRange(nr, nc) && copiedMap[nr][nc] == 0) {
+				copiedMap[nr][nc] = 2;
+				dfs(nr, nc);
 			}
 		}
 	}
@@ -94,15 +85,15 @@ public class Main {
 		return 0 <= r && r < n && 0 <= c && c < m;
 	}
 
-	static int safeArea(int[][] copiedMap) {
-		int count = 0;
+	static int safeArea() {
+		int area = 0;
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
 				if (copiedMap[i][j] == 0) {
-					count++;
+					area++;
 				}
 			}
 		}
-		return count;
+		return area;
 	}
 }
