@@ -24,19 +24,22 @@ public class Main {
 		// 입력 처리
 		n = Integer.parseInt(br.readLine());
 		map = new int[n][n];
-		int maxH = 0;
+
+		int minH = Integer.MAX_VALUE;
+		int maxH = Integer.MIN_VALUE;
 
 		// 맵 초기화
 		for (int i = 0; i < n; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			for (int j = 0; j < n; j++) {
 				map[i][j] = Integer.parseInt(st.nextToken());
+				minH = Math.min(minH, map[i][j]);
 				maxH = Math.max(maxH, map[i][j]);
 			}
 		}
 
 		int answer = 0;
-		for (int h = 0; h <= maxH; h++) { // 0 ~ maxH 높이의 비를 내린다
+		for (int h = minH - 1; h <= maxH; h++) { // minH - 1 ~ maxH 높이의 비를 내린다
 			visited = new boolean[n][n];
 
 			// 맵을 순회하면서 안전 영역 개수를 구한다
